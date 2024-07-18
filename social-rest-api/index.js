@@ -11,6 +11,7 @@ const conversationRoute = require('./routes/conversations')
 const messageRoute = require('./routes/messages')
 const multer = require('multer')
 const path = require('path')
+const cors = require('cors')
 
 dotenv.config()
 
@@ -19,6 +20,7 @@ mongoose.connect(process.env.MONGO_URI).catch(err => console.log(err))
 app.use("/images",express.static(path.join(__dirname,"public/images")))
 
 //middlewares
+app.use(cors())
 app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
@@ -32,7 +34,7 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({storage: storage}) 
+const upload = multer({storage: storage})
 
 app.post("/api/upload", upload.single("file"), (req,res) => {
     try {
