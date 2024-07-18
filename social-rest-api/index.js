@@ -50,6 +50,10 @@ app.use('/api/posts',postRoute)
 app.use('/api/conversations',conversationRoute)
 app.use('/api/messages',messageRoute)
 
+app.get("/", (req,res) => {
+    res.status(200).json("hello")
+})
+
 app.listen(process.env.PORT || 5000, () => {
     console.log('Server running on port 5000...')
 })
