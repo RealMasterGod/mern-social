@@ -20,13 +20,7 @@ mongoose.connect(process.env.MONGO_URI).catch(err => console.log(err))
 app.use("/images",express.static(path.join(__dirname,"public/images")))
 
 //middlewares
-app.use(cors(
-    {
-        origin: ["https://mern-social-api-git-main-realmastergods-projects.vercel.app"],
-        methods: ["POST","GET","PUT","DELETE"],
-        credentials: true
-    }
-))
+app.use(cors())
 app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
