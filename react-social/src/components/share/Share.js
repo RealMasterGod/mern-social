@@ -23,14 +23,14 @@ export default function Share() {
             data.append("file",file)
             newPost.img = fileName
             try {
-                await axios.post("/upload", data)
+                await axios.post("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/upload", data)
             } catch (err) {
                 console.log(err)
             }
         }
 
         try {
-           await axios.post("/posts",newPost)
+           await axios.post("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/posts",newPost)
            window.location.reload()
         } catch (err) {
 

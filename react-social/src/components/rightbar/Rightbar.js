@@ -26,7 +26,7 @@ export default function Rightbar({user}) {
     useEffect(() => {
         const getFriends = async () => {
             try {
-                const friendList = await axios.get("/users/friends/"+ currentUser?._id)
+                const friendList = await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users/friends/"+ currentUser?._id)
                 setFriends(friendList.data)
             } catch (err) {
                 console.log(err)
@@ -40,7 +40,7 @@ export default function Rightbar({user}) {
         socket.current.on("getUsers",users=>{
             setOnlineUsers(currentUser?.followings?.filter((f) => users?.some(u => u?.userId === f)))
         })
-    },[user])
+    },[user,currentUser])
 
 
 
