@@ -54,6 +54,10 @@ app.get("/", (req,res) => {
     res.status(200).json("hello")
 })
 
+app.get("/api", (req,res) => {
+    res.status(200).json("api working")
+})
+
 app.listen(process.env.PORT || 5000, () => {
     console.log('Server running on port 5000...')
 })
