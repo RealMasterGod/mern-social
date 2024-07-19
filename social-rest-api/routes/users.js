@@ -52,6 +52,15 @@ router.delete('/:id', async (req, res) => {
 
 // get a user
 
+router.get('/test', async (req,res) => {
+    try {
+        const res = await User.find()
+        res.status(200).json(res.data)
+    } catch (err) {
+        res.status(500).json(err)
+    }
+})
+
 router.get('/', async (req, res) => {
     const userId = req.query.userId
     const username = req.query.username
