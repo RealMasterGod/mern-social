@@ -16,9 +16,9 @@ export default function Rightbar({user}) {
     const [onlineUsers, setOnlineUsers] = useState([])
     const socket = useRef()
 
-    useEffect(() => {
-        socket.current = io("ws://localhost:8900")
-    },[])
+    // useEffect(() => {
+    //     socket.current = io("ws://localhost:8900")
+    // },[])
     // useEffect(() => {
     //     setFollowed(currentUser.followings.includes(user?.id))
     // },[currentUser,user.id])
@@ -35,23 +35,23 @@ export default function Rightbar({user}) {
         getFriends()
     },[currentUser])
 
-      useEffect(() => {
-        socket.current.emit("addUser",currentUser?._id)
-        socket.current.on("getUsers",users=>{
-            setOnlineUsers(currentUser?.followings?.filter((f) => users?.some(u => u?.userId === f)))
-        })
-    },[user,currentUser])
+    //   useEffect(() => {
+    //     socket.current.emit("addUser",currentUser?._id)
+    //     socket.current.on("getUsers",users=>{
+    //         setOnlineUsers(currentUser?.followings?.filter((f) => users?.some(u => u?.userId === f)))
+    //     })
+    // },[user,currentUser])
 
 
 
     const handleClick = async() => {
         try {
             if(followed) {
-                await axios.put("/users/"+user._id+"/unfollow",{userId: currentUser._id})
+                await axios.put("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users/"+user._id+"/unfollow",{userId: currentUser._id})
                 dispatch({type: "UNFOLLOW", payload: user._id})
             }
             else {
-                await axios.put("/users/"+user._id+"/follow",{userId: currentUser._id})
+                await axios.put("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users/"+user._id+"/follow",{userId: currentUser._id})
                 dispatch({type: "FOLLOW", payload: user._id})
             }
            
