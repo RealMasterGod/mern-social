@@ -15,7 +15,7 @@ const cors = require('cors')
 
 dotenv.config()
 
-mongoose.connect(process.env.MONGO_URI).then(() => console.log("Connected To DB")).catch(err => console.log(err))
+mongoose.connect(process.env.MONGODB_URI).then(() => console.log("Connected To DB")).catch(err => console.log(err))
 
 app.use("/images",express.static(path.join(__dirname,"public/images")))
 
