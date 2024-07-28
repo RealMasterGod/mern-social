@@ -21,7 +21,7 @@ export default function Register() {
                 password: password.current.value,
             }
             try {
-                await axios.post("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/auth/register", user)
+                await axios.post(`${process.env.REACT_APP_BASE_URL}auth/register`, user)
                 navigate("/login")
             } catch (err) {
                 console.log(err)

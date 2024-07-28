@@ -35,6 +35,63 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+.user-desc {
+    /* flex: 10; */
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; */
+}
+
+h5 {
+    padding: 10px;
+}
+
+.updateProfile {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-right: 10px;
+    background-color: rebeccapurple;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.update-form > label {
+    margin: 5px 0;
+    color: rebeccapurple;
+}
+
+.update-form > button {
+    padding: 10px;
+    border: none;
+    color: white;
+    background-color: rebeccapurple;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.update-form > input {
+    padding: 10px 0;
+    /* border: none; */
+    /* border: 1px solid lightgreen; */
+    width: 50%;
 }
 
 .profileInfoName {

@@ -20,6 +20,22 @@ box-shadow: 0px 0px 16px -8px rgba(0,0,0,0.68);
     display: flex;
     align-items: center;
 }
+.postTopRight {
+    display: flex;
+    align-items: center;
+}
+
+.editPost, .deletePost {
+    height: 30px;
+    width: 30px;
+    border: none;
+    font-size: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+} 
 
 .postProfileImg {
     width: 32px;

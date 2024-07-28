@@ -10,7 +10,7 @@ export default function Online({currentUser, onlineUsers}) {
 
     useEffect(() => {
         const getFriends = async () => {
-          const res = await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users/friends/" + currentUser?._id);
+          const res = await axios.get(`${process.env.REACT_APP_BASE_URL}users/friends/` + currentUser?._id);
           setFriends(res.data);
         };
         getFriends();

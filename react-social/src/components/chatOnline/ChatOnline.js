@@ -8,7 +8,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   useEffect(() => {
     const getFriends = async () => {
-      const res = await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/users/friends/" + currentId);
+      const res = await axios.get(`${process.env.REACT_APP_BASE_URL}users/friends/` + currentId);
       setFriends(res.data);
     };
     getFriends();
@@ -19,7 +19,7 @@ export default function ChatOnline({ onlineUsers, currentId, setCurrentChat }) {
 
   const handleClick = async (user) => {
     try {
-        const res = await axios.get(`https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/conversations/find/${currentId}/${user?._id}`)
+        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}conversations/find/${currentId}/${user?._id}`)
         setCurrentChat(res.data)
     } catch(err) {
         console.log(err)

@@ -3,6 +3,7 @@ import { useContext, useRef } from "react"
 import { loginCall } from "../../apiCalls"
 import { AuthContext } from "../../context/AuthContext"
 import { CircularProgress } from "@mui/material"
+import { Link } from "react-router-dom"
 
 export default function Login() {
 
@@ -29,12 +30,14 @@ export default function Login() {
                 <div className="loginRight">
                     <form className="loginBox" onSubmit={handleClick}> 
                         <input placeholder="Email" type="email" className="loginInput" ref={email} required/>
-                        <input placeholder="Password" type="password" minLength="6" className="loginInput" ref={password} required/>
+                        <input placeholder="Password" type="password" minLength="4" className="loginInput" ref={password} required/>
                         <button className="loginButton" type="submit" disabled={isFetching} >{isFetching ? <CircularProgress color="inherit" />:"Log In"}</button>
                         <span className="loginForgot">Forgot Password?</span>
-                        <button className="loginRegisterButton">
+                        <Link to="/register" style={{color: 'inherit', textDecoration: 'none'}}>
+                        <button type="button" className="loginRegisterButton" style={{width: '100%'}}>
                             {isFetching ? <CircularProgress color="inherit" />:"Create a New Account"}
                         </button>
+                        </Link>
                     </form>
                 </div>
             </div>

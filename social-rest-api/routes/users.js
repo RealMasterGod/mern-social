@@ -6,24 +6,30 @@ const bcrypt = require('bcrypt')
 
 router.put('/:id', async (req, res) => {
     if(req.body.userId === req.params.id || req.body.isAdmin) {
-        if(req.body.password) {
-            try {
-                const salt = await bcrypt.genSalt(10)
-                req.body.password = await bcrypt.hash(req.body.password, salt)
-
-            } catch (err) {
-                console.log(err)
-                return res.status(500).json(err)
-            }
-        }
         try {
-            const user = await User.findByIdAndUpdate(req.params.id, {
-                $set: req.body
-            })
-            res.status(200).json("Account has been updated")
-
-        } catch (err) {
-            console.log(err)
+            const user = await User.findById(req.params.id)
+            const validPassword = await bcrypt.compare(req.body.password, user.password)
+            if(!validPassword) {
+                return res.status(403).json("Password verification failed! please enter correct password")
+            }
+            if(req.body.newPassword) {
+                try {
+                    const salt = await bcrypt.genSalt(10)
+                    req.body.password = await bcrypt.hash(req.body.newPassword, salt)
+    
+                } catch (err) {
+                    return res.status(500).json(err)
+                }
+            } else {
+                req.body.password = user.password
+            }
+            const {newPassword,...other} = req.body
+            const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+                $set: other,
+            },{new: true})
+            const {password, ...userInfo} = updatedUser._doc
+            res.status(200).json(userInfo)
+        }  catch (err) {
             return res.status(500).json(err)
         }
 
@@ -52,22 +58,27 @@ router.delete('/:id', async (req, res) => {
 
 // get a user
 
-router.get('/test', async (req,res) => {
-    try {
-        const res = await User.find()
-        res.status(200).json(res.data)
-    } catch (err) {
-        res.status(500).json(err)
-    }
-})
+// router.get('/test', async (req,res) => {
+//     try {
+//         const res = await User.find()
+//         res.status(200).json(res.data)
+//     } catch (err) {
+//         res.status(500).json(err)
+//     }
+// })
 
 router.get('/', async (req, res) => {
     const userId = req.query.userId
     const username = req.query.username
     try {
         const user = userId ? await User.findById(userId) : await User.findOne({username: username})
-        const {password, updatedAt, ...other} = user._doc
-        res.status(200).json(other)
+        if(user) {
+            const {password, updatedAt, ...other} = user._doc
+            return res.status(200).json(other)
+        } else {
+            return res.status(404).json(user)
+        }
+        
     } catch (err) {
         console.log(err)
             return res.status(500).json(err)

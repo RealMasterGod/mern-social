@@ -12,12 +12,16 @@ export default function Feed({ username }) {
   useEffect(() => {
     
     const fetchPosts = async () => {
-      const res = username
-        ? await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/posts/profile/" + username)
-        : await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/posts/timeline/" + user._id);
+      try {
+        const res = username
+        ? await axios.get(`${process.env.REACT_APP_BASE_URL}posts/profile/` + username)
+        : await axios.get(`${process.env.REACT_APP_BASE_URL}posts/timeline/` + user._id);
       setPosts(res.data.sort((p1,p2) => {
         return new Date(p2.createdAt) - new Date(p1.createdAt)
       }));
+      } catch (err) {
+        console.log(err)
+      }
     };
     fetchPosts();
   }, [username,user._id]);

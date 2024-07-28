@@ -11,7 +11,7 @@ export default function Conversation({conversation, currentUser}) {
 
         const getUser = async () => {
             try {
-                const res = await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users?userId="+friendId)
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}users?userId=`+friendId)
                 setUser(res.data)
             } catch (err) {
                 console.log(err)

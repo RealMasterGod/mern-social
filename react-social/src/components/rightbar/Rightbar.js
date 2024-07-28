@@ -12,7 +12,7 @@ export default function Rightbar({user}) {
     const PF = process.env.REACT_APP_PUBLIC_FOLDER
     const [friends,setFriends] = useState([])
     const {user: currentUser, dispatch} = useContext(AuthContext)
-    const [followed, setFollowed] = useState(currentUser?.followings?.includes(user?.id))
+    const [followed, setFollowed] = useState(currentUser?.followings?.includes(user?._id))
     const [onlineUsers, setOnlineUsers] = useState([])
     const socket = useRef()
 
@@ -24,16 +24,17 @@ export default function Rightbar({user}) {
     // },[currentUser,user.id])
 
     useEffect(() => {
+        setFollowed(currentUser?.followings?.includes(user?._id))
         const getFriends = async () => {
             try {
-                const friendList = await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users/friends/"+ currentUser?._id)
+                const friendList = await axios.get(`${process.env.REACT_APP_BASE_URL}users/friends/`+ user?._id)
                 setFriends(friendList.data)
             } catch (err) {
                 console.log(err)
             }
         }
         getFriends()
-    },[currentUser])
+    },[user])
 
     //   useEffect(() => {
     //     socket.current.emit("addUser",currentUser?._id)
@@ -47,11 +48,11 @@ export default function Rightbar({user}) {
     const handleClick = async() => {
         try {
             if(followed) {
-                await axios.put("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users/"+user._id+"/unfollow",{userId: currentUser._id})
+                await axios.put(`${process.env.REACT_APP_BASE_URL}users/`+user._id+"/unfollow",{userId: currentUser._id})
                 dispatch({type: "UNFOLLOW", payload: user._id})
             }
             else {
-                await axios.put("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/users/"+user._id+"/follow",{userId: currentUser._id})
+                await axios.put(`${process.env.REACT_APP_BASE_URL}users/`+user._id+"/follow",{userId: currentUser._id})
                 dispatch({type: "FOLLOW", payload: user._id})
             }
            
@@ -78,6 +79,7 @@ export default function Rightbar({user}) {
     }
 
     const ProfileRightbar = () => {
+        
         return (
             <>
                 {user.username !== currentUser.username && (
@@ -98,7 +100,7 @@ export default function Rightbar({user}) {
                     </div>
                     <div className="rightbarInfoItem">
                         <span className="rightbarInfoKey">Relationship:</span>
-                        <span className="rightbarInfoValue">{user.relationship === 1 ? "Single" : user.relationship === 1 ? "Married" : "-"}</span>
+                        <span className="rightbarInfoValue">{user.relationship === 1 ? "Single" : user.relationship === 2 ? "Married" : "-"}</span>
                     </div>
                 </div>
                 <h4 className="rightbarTitle">User Friends</h4>

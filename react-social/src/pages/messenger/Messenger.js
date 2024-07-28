@@ -47,7 +47,7 @@ export default function Messenger() {
     useEffect(() => {
         const getConversations = async () => {
             try {
-                const res = await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/conversations/"+ user._id)
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}conversations/`+ user._id)
                 setConversations(res.data)
             } catch (err) {
                 console.log(err)
@@ -59,7 +59,7 @@ export default function Messenger() {
     useEffect(() => {
         const getMessages = async () => {
            try {
-                const res = await axios.get("https://mern-social-api-git-main-realmastergods-projects.vercel.app/api/messages/"+currentChat?._id)
+                const res = await axios.get(`${process.env.REACT_APP_BASE_URL}messages/`+currentChat?._id)
                 setMessages(res.data)
            } catch (err) {
                 console.log(err)
